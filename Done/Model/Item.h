@@ -9,11 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface Item : NSObject <PFSubclassing>
+@interface Item : PFObject <PFSubclassing>
 
 + (NSString *) parseClassName;
-
-+ (void) saveEventually;
 
 @property (strong, nonatomic) NSString *_id;
 @property (strong, nonatomic) NSString *listId;

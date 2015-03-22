@@ -8,7 +8,14 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+// Managers
+#import "DataManager.h"
+
+@interface ViewController () {
+    
+    DataManager *dataManager;
+    
+}
 
 @end
 
@@ -18,11 +25,40 @@
     
     [super viewDidLoad];
     
-    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
-    testObject[@"foo"] = @"bar";
-    [testObject saveInBackground];
+    dataManager = [DataManager sharedManager];
+    
+    Item *item = [Item object];
+    item.name = @"First Item";
+
+    [dataManager saveItem:item];
+    
+    List *list = [List object];
+    list.name = @"First List";
+    
+    [dataManager saveList:list];
+    
+    PFQuery *query = [Item query];
+    [query whereKey:@"name" notEqualTo:@"DO"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            
+            NSLog(@"objects %@", objects);
+            
+            Item *firstArmor = [objects firstObject];
+            
+            NSLog(@"count %lu", (unsigned long)[objects count]);
+            
+            NSLog(@"first item %@", firstArmor);
+            
+            // ...
+        }
+    }];
     
     
+    
+    NSLog(@"QUERY %@", query);
+    
+
 }
 
 - (void)didReceiveMemoryWarning {

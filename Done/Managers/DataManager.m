@@ -36,60 +36,23 @@
     return self;
 }
 
-- (BOOL) createItem: (Item *)item {
+- (void) saveItem: (Item *)item {
     
-//    // Add a relation between the Post with objectId "1zEcyElZ80" and the comment
-//    myComment[@"parent"] = [PFObject objectWithoutDataWithClassName:@"Post" objectId:@"1zEcyElZ80"];
+    item.creationDate = [NSDate date];
+    item.done = [NSNumber numberWithBool:NO];
+    item.deleted = [NSNumber numberWithBool:NO];
     
-    __block BOOL result;
-    
-    Item *object = [Item object];
-    
-    object._id = [DataManager generateUID];  // NOT NECESSARY
-    object.listId = item.listId;
-    object.name = item.name;
-    
-    object.creationDate = [NSDate date];
-    object.done = [NSNumber numberWithBool:NO];
-    object.deleted = [NSNumber numberWithBool:NO];
-    
-    return result;
+    [item saveEventually];
     
 }
 
-- (BOOL) createList: (List *)list {
+- (void) saveList: (List *)list {
     
-    __block BOOL result;
-    
-    PFObject *object = [PFObject objectWithClassName:@"list"];
-    
-    object[@"_id"] = [DataManager generateUID];  // NOT NECESSARY
-    object[@"name"] = list.name;
-    
-    object[@"creationDate"] = [NSDate date];
-    object[@"done"] = [NSNumber numberWithBool:NO];
-    object[@"deleted"] = [NSNumber numberWithBool:NO];
-    
-    [object saveInBackgroundWithBlock:^(BOOL success, NSError *error) {
-        
-        if (success) {
-            
-            // The object has been saved.
-            
-            result = YES;
-            
-        } else {
-            
-            // There was a problem, check error.description
-            
-            [ErrorManager showAlertWithDelegate:self forError:error];
-            
-            result = NO;
-            
-        }
-    }];
-    
-    return result;
+    list.creationDate = [NSDate date];
+    list.done = [NSNumber numberWithBool:NO];
+    list.deleted = [NSNumber numberWithBool:NO];
+
+    [list saveEventually];
     
 }
 

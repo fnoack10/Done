@@ -18,38 +18,44 @@
 @dynamic done;
 @dynamic deleted;
 
++ (void)load {
+    
+    [self registerSubclass];
+    
+}
+
 + (NSString *)parseClassName {
     
     return @"List";
     
 }
 
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId {
-    
-    return nil;
-    
-}
-
-+ (instancetype)object {
-    
-    return nil;
-    
-}
-
-+ (PFQuery *)query {
-    
-    return nil;
-    
-}
-
-+ (PFQuery *)queryWithPredicate:(NSPredicate *)predicate {
-    
-    return nil;
-    
-}
-
-+ (void)registerSubclass {
-    
-}
+//+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId {
+//    
+//    return nil;
+//    
+//}
+//
+//+ (instancetype)object {
+//    
+//    return nil;
+//    
+//}
+//
+//+ (PFQuery *)query {
+//    
+//    return nil;
+//    
+//}
+//
+//+ (PFQuery *)queryWithPredicate:(NSPredicate *)predicate {
+//    
+//    return nil;
+//    
+//}
+//
+//+ (void)registerSubclass {
+//    
+//}
 
 @end

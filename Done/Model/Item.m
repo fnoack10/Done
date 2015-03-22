@@ -31,32 +31,22 @@
     
 }
 
-+ (instancetype)objectWithoutDataWithObjectId:(NSString *)objectId {
-    
-    return nil;
-    
-}
-
-+ (instancetype)object {
-    
-    return nil;
-    
-}
-
-+ (PFQuery *)query {
-    
-    return nil;
-    
-}
-
-+ (PFQuery *)queryWithPredicate:(NSPredicate *)predicate {
-    
-    return nil;
-    
-}
-
-+ (void)registerSubclass {
-    
-}
+//+ (PFQuery *)query {
+//    
+//    PFQuery *query = [Item query];
+//    
+//    return query;
+//    
+//    
+//    
+////    [query whereKey:@"rupees" lessThanOrEqualTo:[PFUser currentUser][@"rupees"]];
+////    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+////        if (!error) {
+////            Armor *firstArmor = [objects firstObject];
+////            // ...
+////        }
+////    }];
+//    
+//}
 
 @end

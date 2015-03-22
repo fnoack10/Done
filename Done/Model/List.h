@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
-@interface List : NSObject <PFSubclassing>
+@interface List : PFObject <PFSubclassing>
 
 + (NSString *)parseClassName;
 

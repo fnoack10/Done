@@ -26,9 +26,9 @@
 
 // Data Manager Public Methods
 
-- (BOOL) createItem: (Item *)item;
+- (void) saveItem: (Item *)item;
 
-- (BOOL) createList: (List *)list;
+- (void) saveList: (List *)list;
 
 
 @end
