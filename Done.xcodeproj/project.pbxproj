@@ -7,9 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B68D3599DF8661C972ECDC92 /* libPods-Done.a */; };
+		9D97CB9B1AC85991004F2140 /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CB9A1AC85991004F2140 /* Palette.m */; };
+		9D97CB9F1AC85E39004F2140 /* DoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CB9E1AC85E39004F2140 /* DoneViewController.m */; };
+		9D97CBA21AC8602F004F2140 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CBA11AC8602F004F2140 /* ItemTableViewCell.m */; };
 		9DB178561ABDA5A400E9E60F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB178551ABDA5A400E9E60F /* main.m */; };
 		9DB178591ABDA5A400E9E60F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB178581ABDA5A400E9E60F /* AppDelegate.m */; };
-		9DB1785C1ABDA5A400E9E60F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB1785B1ABDA5A400E9E60F /* ViewController.m */; };
 		9DB1785F1ABDA5A400E9E60F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9DB1785D1ABDA5A400E9E60F /* Main.storyboard */; };
 		9DB178611ABDA5A400E9E60F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DB178601ABDA5A400E9E60F /* Images.xcassets */; };
 		9DB178641ABDA5A400E9E60F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9DB178621ABDA5A400E9E60F /* LaunchScreen.xib */; };
@@ -47,13 +50,17 @@
 
 /* Begin PBXFileReference section */
 		95B38A6A5BF4FDB3954BD708 /* Pods-Done.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Done.release.xcconfig"; path = "Pods/Target Support Files/Pods-Done/Pods-Done.release.xcconfig"; sourceTree = "<group>"; };
+		9D97CB991AC85991004F2140 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Palette.h; path = Resources/Palette.h; sourceTree = "<group>"; };
+		9D97CB9A1AC85991004F2140 /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Palette.m; path = Resources/Palette.m; sourceTree = "<group>"; };
+		9D97CB9D1AC85E39004F2140 /* DoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoneViewController.h; sourceTree = "<group>"; };
+		9D97CB9E1AC85E39004F2140 /* DoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoneViewController.m; sourceTree = "<group>"; };
+		9D97CBA01AC8602F004F2140 /* ItemTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ItemTableViewCell.h; path = Resources/ItemTableViewCell.h; sourceTree = "<group>"; };
+		9D97CBA11AC8602F004F2140 /* ItemTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ItemTableViewCell.m; path = Resources/ItemTableViewCell.m; sourceTree = "<group>"; };
 		9DB178501ABDA5A400E9E60F /* Done.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Done.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB178541ABDA5A400E9E60F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DB178551ABDA5A400E9E60F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9DB178571ABDA5A400E9E60F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9DB178581ABDA5A400E9E60F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9DB1785A1ABDA5A400E9E60F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9DB1785B1ABDA5A400E9E60F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9DB1785E1ABDA5A400E9E60F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9DB178601ABDA5A400E9E60F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9DB178631ABDA5A400E9E60F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -107,6 +114,7 @@
 				9DE77C021ABF3B8B007C1FC9 /* AudioToolbox.framework in Frameworks */,
 				9DE77BFE1ABF3B1B007C1FC9 /* Parse.framework in Frameworks */,
 				9DE77C001ABF3B20007C1FC9 /* Bolts.framework in Frameworks */,
+				93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,6 +158,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9D97CB9C1AC8599A004F2140 /* Reources */ = {
+			isa = PBXGroup;
+			children = (
+				9D97CBA01AC8602F004F2140 /* ItemTableViewCell.h */,
+				9D97CBA11AC8602F004F2140 /* ItemTableViewCell.m */,
+				9D97CB991AC85991004F2140 /* Palette.h */,
+				9D97CB9A1AC85991004F2140 /* Palette.m */,
+			);
+			name = Reources;
+			sourceTree = "<group>";
+		};
 		9DB178471ABDA5A400E9E60F = {
 			isa = PBXGroup;
 			children = (
@@ -176,10 +195,11 @@
 				9DB178571ABDA5A400E9E60F /* AppDelegate.h */,
 				9DB178581ABDA5A400E9E60F /* AppDelegate.m */,
 				9DB1785D1ABDA5A400E9E60F /* Main.storyboard */,
-				9DB1785A1ABDA5A400E9E60F /* ViewController.h */,
-				9DB1785B1ABDA5A400E9E60F /* ViewController.m */,
+				9D97CB9D1AC85E39004F2140 /* DoneViewController.h */,
+				9D97CB9E1AC85E39004F2140 /* DoneViewController.m */,
 				9DB178A31ABDAB9900E9E60F /* Model */,
 				9DB1789C1ABDAA0D00E9E60F /* Managers */,
+				9D97CB9C1AC8599A004F2140 /* Reources */,
 				9DB178601ABDA5A400E9E60F /* Images.xcassets */,
 				9DB178621ABDA5A400E9E60F /* LaunchScreen.xib */,
 				9DB178531ABDA5A400E9E60F /* Supporting Files */,
@@ -246,9 +266,9 @@
 			buildPhases = (
 				C653FFEC6A99AC1B72B18E77 /* Check Pods Manifest.lock */,
 				9DB1784C1ABDA5A400E9E60F /* Sources */,
-				9DB1784D1ABDA5A400E9E60F /* Frameworks */,
 				9DB1784E1ABDA5A400E9E60F /* Resources */,
 				9BFA203F16A1B6E67FD2BF12 /* Copy Pods Resources */,
+				9DB1784D1ABDA5A400E9E60F /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -372,10 +392,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D97CBA21AC8602F004F2140 /* ItemTableViewCell.m in Sources */,
 				9DB1789F1ABDAB8400E9E60F /* Item.m in Sources */,
-				9DB1785C1ABDA5A400E9E60F /* ViewController.m in Sources */,
 				9DB1789B1ABDAA0600E9E60F /* DataManager.m in Sources */,
+				9D97CB9B1AC85991004F2140 /* Palette.m in Sources */,
 				9DB178A61ABDAC5100E9E60F /* ErrorManager.m in Sources */,
+				9D97CB9F1AC85E39004F2140 /* DoneViewController.m in Sources */,
 				9DB178A21ABDAB9200E9E60F /* List.m in Sources */,
 				9DB178591ABDA5A400E9E60F /* AppDelegate.m in Sources */,
 				9DB178561ABDA5A400E9E60F /* main.m in Sources */,
@@ -504,9 +526,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
-					"$(PROJECT_DIR)/Done/Supporting",
 					Files,
-					"$(PROJECT_DIR)/Done/Supporting",
 					Files,
 				);
 				INFOPLIST_FILE = Done/Info.plist;
@@ -523,9 +543,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
-					"$(PROJECT_DIR)/Done/Supporting",
 					Files,
-					"$(PROJECT_DIR)/Done/Supporting",
 					Files,
 				);
 				INFOPLIST_FILE = Done/Info.plist;

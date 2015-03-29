@@ -11,7 +11,7 @@
 
 @implementation Item
 
-@dynamic _id;
+
 @dynamic listId;
 @dynamic name;
 

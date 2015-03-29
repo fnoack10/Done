@@ -11,7 +11,6 @@
 
 @implementation List
 
-@dynamic _id;
 @dynamic name;
 
 @dynamic creationDate;
