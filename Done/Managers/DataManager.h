@@ -21,10 +21,20 @@
 
 
 // Properties
-//@property (nonatomic, retain) NSString *someProperty;
 
+@property (nonatomic, retain) PFUser *user;
+
+@property (nonatomic, retain) NSMutableArray *listArray;
+
+@property (nonatomic, strong) NSMutableArray *itemArray;
 
 // Data Manager Public Methods
+
+- (void) loginWithUser: (NSString *)user andPassword: (NSString *)password;
+
+- (void) signUpUser: (PFUser *)user;
+
+- (void) loadUserData;
 
 - (void) saveItem: (Item *)item;
 

@@ -11,19 +11,25 @@
 @interface DoneViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 // Table Views
-@property (weak, nonatomic) IBOutlet UITableView *itemTableView;
+
+@property (weak, nonatomic) IBOutlet UITableView *listTableView;
 
 // Views
+
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 
-// Buttons
-@property (weak, nonatomic) IBOutlet UIButton *leftButton;
-@property (weak, nonatomic) IBOutlet UIButton *rightButton;
-
 // Labels
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
-// Refresh COntrol
+// Buttons
+
+@property (weak, nonatomic) IBOutlet UIButton *leftButton;
+
+@property (weak, nonatomic) IBOutlet UIButton *rightButton;
+
+// Refresh Control
+
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end

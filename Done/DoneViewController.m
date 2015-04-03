@@ -11,6 +11,10 @@
 // Managers
 #import "DataManager.h"
 
+// Controllers
+#import "LoginViewController.h"
+#import "ListViewController.h"
+
 // Resources
 #import "ItemTableViewCell.h"
 #import "Palette.h"
@@ -20,101 +24,82 @@
     
     DataManager *dataManager;
     
-    NSArray *itemArray;
-    
 }
 
 @end
 
+
 @implementation DoneViewController
-
-
 
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
+    dataManager = [DataManager sharedManager];
+    
+    [self addObservers];
+    
     [self automaticLogin];
     
-    dataManager = [DataManager sharedManager];
+    [self initializeTableView];
 
-    UITableViewController *tableViewController = [[UITableViewController alloc] init];
-    tableViewController.tableView = self.itemTableView;
+}
+
+- (void) addObservers {
     
-    [self.itemTableView setDelegate:self];
-    [self.itemTableView setDataSource:self];
-    [self.itemTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeTableView) name:@"LoginSuccess" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTable) name:@"UpdateData" object:nil];
+    
+}
+
+- (void) initializeTableView {
+    
+    UITableViewController *tableViewController = [[UITableViewController alloc] init];
+    tableViewController.tableView = self.listTableView;
+    
+    [self.listTableView setDelegate:self];
+    [self.listTableView setDataSource:self];
+    [self.listTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [Palette backgroundGray];
     self.refreshControl.tintColor = [Palette darkGrayColor];
     [self.refreshControl addTarget:self
-                            action:@selector(refreshItems)
+                            action:@selector(reloadData)
                   forControlEvents:UIControlEventValueChanged];
-
+    
     tableViewController.refreshControl = self.refreshControl;
-    
-    
-    
-    PFUser *user = [PFUser currentUser];    
-
-    Item *item = [Item object];
-    item.name = @"First Item";
-    item[@"user"] = user;
-    
-    [dataManager saveItem:item];
-    
-    List *list = [List object];
-    list.name = @"First List";
-    list[@"user"] = user;
-    
-    [dataManager saveList:list];
-    
-    [self refreshItems];
     
 }
 
+- (void) reloadData {
+    
+    [dataManager loadUserData];
+    
+}
 
-- (void)refreshItems {
+- (void) updateTable {
+    
+    [self updateRefreshControl];
+    
+    [self.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+}
+
+- (void) updateRefreshControl {
     
     [self.refreshControl beginRefreshing];
     
-    PFUser *user = [PFUser currentUser];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[Palette darkGrayColor] forKey:NSForegroundColorAttributeName];
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+    self.refreshControl.attributedTitle = attributedTitle;
     
-    PFQuery *query = [Item query];
-    [query whereKey:@"user" equalTo:user];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        
-        if (!error) {
-            
-            itemArray = objects;
-            [self.itemTableView reloadData];
-            
-            if (self.refreshControl) {
-                
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"MMM d, h:mm a"];
-                NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
-                NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[Palette darkGrayColor]
-                                                                            forKey:NSForegroundColorAttributeName];
-                NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-                self.refreshControl.attributedTitle = attributedTitle;
-                
-            }
-            
-        } else {
-            
-            NSLog(@"ERROR %@", error.description);
-            
-        }
-        
-        
-        [self.refreshControl endRefreshing];
-    }];
-    
+    [self.refreshControl endRefreshing];
     
 }
-
 
 #pragma mark - Done Table View Protocol
 
@@ -129,90 +114,85 @@
         cell = [[ItemTableViewCell alloc] init];
     }
     
-    Item *item = [itemArray objectAtIndex:indexPath.row];
+    List *list = [dataManager.listArray objectAtIndex:indexPath.row];
     
-    cell.titleLabel.text = item.name;
+    cell.titleLabel.text = list.name;
 
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [itemArray count];
+    return [dataManager.listArray count];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return 60;
+    
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    [self performSegueWithIdentifier:@"ListViewSegue" sender:indexPath];
+    
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([[segue identifier] isEqualToString:@"ListViewSegue"]) {
+        
+        NSIndexPath * index = (NSIndexPath *)sender;
+        
+        ListViewController *listViewController = [segue destinationViewController];
+        listViewController.list = [dataManager.listArray objectAtIndex:index.row];
+        
+    }
+    
+
+    
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return YES;
+    
 }
 
+- (void) presentLoginViewController {
+    
+    // TODO -  Implement for Logout Event
+    
+    LoginViewController *loginController = [self.storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    [self addChildViewController:loginController];
+    
+    [self.view insertSubview:loginController.view aboveSubview:self.view];
+    [loginController didMoveToParentViewController:self];
+    
+}
 
 #pragma mark - Login
 
 - (void) automaticLogin {
     
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
+    PFUser *user = [PFUser currentUser];
+    
+    if (user) {
+        
         NSLog(@"CURRENT USER");
+        
+        [dataManager loadUserData];
+        
     } else {
         
         NSLog(@"NO USER");
-        // show the signup or login screen
+        
+        [self presentLoginViewController];
+
     }
     
 }
-
-- (void) loginWithUser: (NSString *)user andPassword: (NSString *)password {
-    
-    [PFUser logInWithUsernameInBackground:user
-                                 password:password
-                                    block:^(PFUser *user, NSError *error) {
-                                        if (user) {
-                                            // Do stuff after successful login.
-                                            NSLog(@"LOGIN SUCCESS");
-                                            
-                                        } else {
-                                            // The login failed. Check error to see why.
-                                            
-                                            NSLog(@"ERROR IN LOGIN");
-                                        }
-                                    }];
-}
-
-- (void)signUp {
-    
-    PFUser *user = [PFUser user];
-    user.username = @"fnoack10@gmail.com";
-    user.password = @"123456";
-    user.email = @"fnoack10@gmail.com";
-    
-    // other fields can be set just like with PFObject
-    user[@"firstName"] = @"Franco";
-    user[@"lastName"] = @"Noack";
-    
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Hooray! Let them use the app now.
-            
-            // GO IN
-            
-        } else {
-            NSString *errorString = [error userInfo][@"error"];
-            NSLog(@"ERROR %@", errorString);
-            // Show the errorString somewhere and let the user try again.
-        }
-    }];
-}
-
 
 @end

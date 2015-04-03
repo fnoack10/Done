@@ -7,7 +7,15 @@
 //
 
 #import "DataManager.h"
+
+// Managers
+
 #import "ErrorManager.h"
+
+// Pods
+
+#import <PromiseKit.h>
+
 
 @implementation DataManager
 
@@ -28,39 +36,177 @@
 
 
 - (id)init {
+    
     if (self = [super init]) {
         
         
-        
     }
+    
     return self;
+    
+}
+
+
+- (void) loginWithUser: (NSString *)user andPassword: (NSString *)password {
+    
+    [PFUser logInWithUsernameInBackground:user password:password block:^(PFUser *user, NSError *error) {
+        
+        if (user) {
+            
+            [self loadUserData];
+            
+            NSLog(@"login success");
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginSuccess" object:nil];
+                                            
+        } else {
+
+            [ErrorManager showAlertWithDelegate:self forError:error];
+
+        }
+    
+    }];
+    
+}
+
+- (void) signUpUser: (PFUser *)user {
+    
+    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded) {
+
+            [self loadUserData];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginSuccess" object:nil];
+            
+        } else {
+            
+            [ErrorManager showAlertWithDelegate:self forError:error];
+            
+        }
+    }];
 }
 
 - (void) saveItem: (Item *)item {
+    
+    item[@"user"] = self.user;
     
     item.creationDate = [NSDate date];
     item.done = [NSNumber numberWithBool:NO];
     item.deleted = [NSNumber numberWithBool:NO];
     
-    [item saveEventually];
+    [item saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+            
+        } else {
+            
+            [item saveEventually];
+            
+            // There was a problem, check error.description
+        }
+        
+    }];
     
 }
 
 - (void) saveList: (List *)list {
     
+    list[@"user"] = self.user;
+    
     list.creationDate = [NSDate date];
     list.done = [NSNumber numberWithBool:NO];
     list.deleted = [NSNumber numberWithBool:NO];
 
-    [list saveEventually];
+    [list saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        if (succeeded) {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+            
+        } else {
+            
+            [list saveEventually];
+            
+            // There was a problem, check error.description
+        }
+        
+    }];
     
 }
 
-+ (NSString *) generateUID
-{
-    CFUUIDRef uidRef = CFUUIDCreate(NULL);
-    CFStringRef uidStringRef = CFUUIDCreateString(NULL, uidRef);
-    return (__bridge NSString *)uidStringRef;
+- (void) loadUserData {
+    
+    self.user = [PFUser currentUser];
+    
+    id lists = [self getLists];
+    id items = [self getItems];
+    
+    [PMKPromise when:@[lists, items]].then(^(NSArray *results){
+        
+        self.listArray = [[results objectAtIndex:0] mutableCopy];
+        self.itemArray = [[results objectAtIndex:1] mutableCopy];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:self];
+        
+    }).catch(^(NSError *error){
+        
+        [ErrorManager showAlertWithDelegate:self forError:error];
+        
+    });
+    
 }
+
+
+- (PMKPromise *) getLists {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+        
+        PFQuery *query = [List query];
+        [query whereKey:@"user" equalTo:self.user];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
+                
+            if (!error) {
+                    
+                fulfill(lists);
+                    
+            } else {
+                    
+                reject(error);
+                    
+            }
+
+        }];
+        
+    }];
+    
+}
+
+- (PMKPromise *) getItems {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+        
+        PFQuery *query = [Item query];
+        [query whereKey:@"user" equalTo:self.user];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *items, NSError *error) {
+                
+            if (!error) {
+                
+                fulfill(items);
+                    
+            } else {
+                    
+                reject(error);
+                    
+            }
+                
+        }];
+        
+    }];
+    
+}
+
+
 
 @end

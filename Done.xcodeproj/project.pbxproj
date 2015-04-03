@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B68D3599DF8661C972ECDC92 /* libPods-Done.a */; };
+		9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */; };
+		9D77E7231ACEC21600E87E67 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E7221ACEC21600E87E67 /* LoginViewController.m */; };
+		9D77E7261ACEEFE200E87E67 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E7251ACEEFE200E87E67 /* SignUpViewController.m */; };
+		9D77E7291ACEF7A300E87E67 /* ListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E7281ACEF7A300E87E67 /* ListViewController.m */; };
+		9D77E72C1ACEF7C500E87E67 /* AddListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E72B1ACEF7C500E87E67 /* AddListViewController.m */; };
 		9D97CB9B1AC85991004F2140 /* Palette.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CB9A1AC85991004F2140 /* Palette.m */; };
 		9D97CB9F1AC85E39004F2140 /* DoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CB9E1AC85E39004F2140 /* DoneViewController.m */; };
 		9D97CBA21AC8602F004F2140 /* ItemTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D97CBA11AC8602F004F2140 /* ItemTableViewCell.m */; };
@@ -50,6 +55,16 @@
 
 /* Begin PBXFileReference section */
 		95B38A6A5BF4FDB3954BD708 /* Pods-Done.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Done.release.xcconfig"; path = "Pods/Target Support Files/Pods-Done/Pods-Done.release.xcconfig"; sourceTree = "<group>"; };
+		9D77E71D1ACEB54800E87E67 /* AddItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddItemViewController.h; path = Controllers/AddItemViewController.h; sourceTree = "<group>"; };
+		9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddItemViewController.m; path = Controllers/AddItemViewController.m; sourceTree = "<group>"; };
+		9D77E7211ACEC21600E87E67 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controllers/LoginViewController.h; sourceTree = "<group>"; };
+		9D77E7221ACEC21600E87E67 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controllers/LoginViewController.m; sourceTree = "<group>"; };
+		9D77E7241ACEEFE200E87E67 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = Controllers/SignUpViewController.h; sourceTree = "<group>"; };
+		9D77E7251ACEEFE200E87E67 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = Controllers/SignUpViewController.m; sourceTree = "<group>"; };
+		9D77E7271ACEF7A300E87E67 /* ListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListViewController.h; path = Controllers/ListViewController.h; sourceTree = "<group>"; };
+		9D77E7281ACEF7A300E87E67 /* ListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListViewController.m; path = Controllers/ListViewController.m; sourceTree = "<group>"; };
+		9D77E72A1ACEF7C500E87E67 /* AddListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddListViewController.h; path = Controllers/AddListViewController.h; sourceTree = "<group>"; };
+		9D77E72B1ACEF7C500E87E67 /* AddListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddListViewController.m; path = Controllers/AddListViewController.m; sourceTree = "<group>"; };
 		9D97CB991AC85991004F2140 /* Palette.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Palette.h; path = Resources/Palette.h; sourceTree = "<group>"; };
 		9D97CB9A1AC85991004F2140 /* Palette.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Palette.m; path = Resources/Palette.m; sourceTree = "<group>"; };
 		9D97CB9D1AC85E39004F2140 /* DoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoneViewController.h; sourceTree = "<group>"; };
@@ -158,6 +173,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		9D77E7201ACEB54F00E87E67 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9D77E7211ACEC21600E87E67 /* LoginViewController.h */,
+				9D77E7221ACEC21600E87E67 /* LoginViewController.m */,
+				9D77E7241ACEEFE200E87E67 /* SignUpViewController.h */,
+				9D77E7251ACEEFE200E87E67 /* SignUpViewController.m */,
+				9D77E7271ACEF7A300E87E67 /* ListViewController.h */,
+				9D77E7281ACEF7A300E87E67 /* ListViewController.m */,
+				9D77E72A1ACEF7C500E87E67 /* AddListViewController.h */,
+				9D77E72B1ACEF7C500E87E67 /* AddListViewController.m */,
+				9D77E71D1ACEB54800E87E67 /* AddItemViewController.h */,
+				9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		9D97CB9C1AC8599A004F2140 /* Reources */ = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +229,7 @@
 				9DB1785D1ABDA5A400E9E60F /* Main.storyboard */,
 				9D97CB9D1AC85E39004F2140 /* DoneViewController.h */,
 				9D97CB9E1AC85E39004F2140 /* DoneViewController.m */,
+				9D77E7201ACEB54F00E87E67 /* Controllers */,
 				9DB178A31ABDAB9900E9E60F /* Model */,
 				9DB1789C1ABDAA0D00E9E60F /* Managers */,
 				9D97CB9C1AC8599A004F2140 /* Reources */,
@@ -394,12 +427,17 @@
 			files = (
 				9D97CBA21AC8602F004F2140 /* ItemTableViewCell.m in Sources */,
 				9DB1789F1ABDAB8400E9E60F /* Item.m in Sources */,
+				9D77E72C1ACEF7C500E87E67 /* AddListViewController.m in Sources */,
+				9D77E7261ACEEFE200E87E67 /* SignUpViewController.m in Sources */,
 				9DB1789B1ABDAA0600E9E60F /* DataManager.m in Sources */,
+				9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */,
 				9D97CB9B1AC85991004F2140 /* Palette.m in Sources */,
 				9DB178A61ABDAC5100E9E60F /* ErrorManager.m in Sources */,
 				9D97CB9F1AC85E39004F2140 /* DoneViewController.m in Sources */,
 				9DB178A21ABDAB9200E9E60F /* List.m in Sources */,
 				9DB178591ABDA5A400E9E60F /* AppDelegate.m in Sources */,
+				9D77E7291ACEF7A300E87E67 /* ListViewController.m in Sources */,
+				9D77E7231ACEC21600E87E67 /* LoginViewController.m in Sources */,
 				9DB178561ABDA5A400E9E60F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -526,8 +564,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
-					Files,
-					Files,
 				);
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -543,8 +579,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
-					Files,
-					Files,
 				);
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

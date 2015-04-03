@@ -13,7 +13,7 @@
 
 + (NSString *) parseClassName;
 
-@property (strong, nonatomic) NSString *listId;
+@property (strong, nonatomic) NSString *list;
 @property (strong, nonatomic) NSString *name;
 
 @property (strong, nonatomic) NSDate *creationDate;

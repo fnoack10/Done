@@ -12,7 +12,7 @@
 @implementation Item
 
 
-@dynamic listId;
+@dynamic list;
 @dynamic name;
 
 @dynamic creationDate;
