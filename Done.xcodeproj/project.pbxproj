@@ -35,7 +35,6 @@
 		9DE77C0A1ABF3BA6007C1FC9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C091ABF3BA6007C1FC9 /* MobileCoreServices.framework */; };
 		9DE77C0C1ABF3BAC007C1FC9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C0B1ABF3BAC007C1FC9 /* QuartzCore.framework */; };
 		9DE77C0E1ABF3BB3007C1FC9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C0D1ABF3BB3007C1FC9 /* Security.framework */; };
-		9DE77C101ABF3BB9007C1FC9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C0F1ABF3BB9007C1FC9 /* StoreKit.framework */; };
 		9DE77C121ABF3BC3007C1FC9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C111ABF3BC3007C1FC9 /* SystemConfiguration.framework */; };
 		9DE77C141ABF3BCB007C1FC9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C131ABF3BCB007C1FC9 /* libz.dylib */; };
 		9DE77C161ABF3BD6007C1FC9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C151ABF3BD6007C1FC9 /* libsqlite3.dylib */; };
@@ -99,7 +98,6 @@
 		9DE77C091ABF3BA6007C1FC9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9DE77C0B1ABF3BAC007C1FC9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		9DE77C0D1ABF3BB3007C1FC9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		9DE77C0F1ABF3BB9007C1FC9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		9DE77C111ABF3BC3007C1FC9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9DE77C131ABF3BCB007C1FC9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		9DE77C151ABF3BD6007C1FC9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -119,7 +117,6 @@
 				9DE77C181ABF3C9E007C1FC9 /* Accounts.framework in Frameworks */,
 				9DE77C171ABF3C98007C1FC9 /* Social.framework in Frameworks */,
 				9DE77C121ABF3BC3007C1FC9 /* SystemConfiguration.framework in Frameworks */,
-				9DE77C101ABF3BB9007C1FC9 /* StoreKit.framework in Frameworks */,
 				9DE77C0E1ABF3BB3007C1FC9 /* Security.framework in Frameworks */,
 				9DE77C0C1ABF3BAC007C1FC9 /* QuartzCore.framework in Frameworks */,
 				9DE77C0A1ABF3BA6007C1FC9 /* MobileCoreServices.framework in Frameworks */,
@@ -149,7 +146,6 @@
 				9DE77C151ABF3BD6007C1FC9 /* libsqlite3.dylib */,
 				9DE77C131ABF3BCB007C1FC9 /* libz.dylib */,
 				9DE77C111ABF3BC3007C1FC9 /* SystemConfiguration.framework */,
-				9DE77C0F1ABF3BB9007C1FC9 /* StoreKit.framework */,
 				9DE77C0D1ABF3BB3007C1FC9 /* Security.framework */,
 				9DE77C0B1ABF3BAC007C1FC9 /* QuartzCore.framework */,
 				9DE77C091ABF3BA6007C1FC9 /* MobileCoreServices.framework */,
@@ -341,6 +337,12 @@
 				TargetAttributes = {
 					9DB1784F1ABDA5A400E9E60F = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 5HSE25GYZA;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					9DB178681ABDA5A400E9E60F = {
 						CreatedOnToolsVersion = 6.2;
@@ -561,6 +563,8 @@
 			baseConfigurationReference = B9630E7DC3D1484601C5DF9B /* Pods-Done.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
@@ -568,6 +572,7 @@
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -576,6 +581,8 @@
 			baseConfigurationReference = 95B38A6A5BF4FDB3954BD708 /* Pods-Done.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Done",
@@ -583,6 +590,7 @@
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

@@ -39,7 +39,7 @@
         item[@"list"] = self.list;
         item.name = self.itemNameTextField.text;
         
-        [[[DataManager sharedManager] itemArray] addObject:item];
+        [[[DataManager sharedManager] itemsInListArray] addObject:item];
         
         [[DataManager sharedManager] saveItem:item];
         

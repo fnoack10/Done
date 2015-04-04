@@ -80,6 +80,9 @@
 
 - (void) updateTable {
     
+    
+    NSLog(@"update tabel");
+    
     [self updateRefreshControl];
     
     [self.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -101,6 +104,16 @@
     
 }
 
+
+- (NSInteger) countForList: (List *)list {
+    
+    PFQuery *query = [List query];
+    [query fromLocalDatastore];
+    [query whereKey:@"list" equalTo:list];
+    return [[query findObjects] count];
+    
+}
+
 #pragma mark - Done Table View Protocol
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,7 +129,7 @@
     
     List *list = [dataManager.listArray objectAtIndex:indexPath.row];
     
-    cell.titleLabel.text = list.name;
+    cell.titleLabel.text = [NSString stringWithFormat:@" %@ %ld ", list.name, (long)[self countForList:list]];
 
     return cell;
 }
@@ -149,8 +162,9 @@
         ListViewController *listViewController = [segue destinationViewController];
         listViewController.list = [dataManager.listArray objectAtIndex:index.row];
         
+        NSLog(@"list array %@", [dataManager.listArray objectAtIndex:index.row]);
+        
     }
-    
 
     
 }

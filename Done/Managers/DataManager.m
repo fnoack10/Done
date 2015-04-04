@@ -94,20 +94,22 @@
     item.done = [NSNumber numberWithBool:NO];
     item.deleted = [NSNumber numberWithBool:NO];
     
-    [item saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    [item pinInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
         if (succeeded) {
+            
+            [item saveEventually];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
             
         } else {
             
-            [item saveEventually];
+            [ErrorManager showAlertWithDelegate:self forError:error];
             
-            // There was a problem, check error.description
         }
         
     }];
+
     
 }
 
@@ -118,21 +120,23 @@
     list.creationDate = [NSDate date];
     list.done = [NSNumber numberWithBool:NO];
     list.deleted = [NSNumber numberWithBool:NO];
-
-    [list saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    
+    [list pinInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
         if (succeeded) {
+            
+            [list saveEventually];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
             
         } else {
             
-            [list saveEventually];
-            
-            // There was a problem, check error.description
+            [ErrorManager showAlertWithDelegate:self forError:error];
+
         }
         
     }];
+
     
 }
 
@@ -140,15 +144,14 @@
     
     self.user = [PFUser currentUser];
     
+    // TODO - Reachability
+    
     id lists = [self getLists];
     id items = [self getItems];
     
     [PMKPromise when:@[lists, items]].then(^(NSArray *results){
         
-        self.listArray = [[results objectAtIndex:0] mutableCopy];
-        self.itemArray = [[results objectAtIndex:1] mutableCopy];
-
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:self];
+        [self fetchUserData];
         
     }).catch(^(NSError *error){
         
@@ -157,6 +160,134 @@
     });
     
 }
+
+- (void) fetchUserData {
+    
+    self.user = [PFUser currentUser];
+    
+    id fetchLists = [self fetchLists];
+    id fetchItems = [self fetchItems];
+    
+    [PMKPromise when:@[fetchLists, fetchItems]].then(^(NSArray *results){
+        
+        self.listArray = [[results objectAtIndex:0] mutableCopy];
+        self.itemArray = [[results objectAtIndex:1] mutableCopy];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+        
+    }).catch(^(NSError *error){
+        
+        [ErrorManager showAlertWithDelegate:self forError:error];
+        
+    });
+    
+}
+
+- (void) fetchItemsInList: (List *)list {
+    
+    PFQuery *query = [Item query];
+    [query fromLocalDatastore];
+    [query whereKey:@"list" equalTo:list];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *items, NSError *error) {
+        
+        if (!error) {
+            
+            self.itemsInListArray = [items mutableCopy];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+            
+        } else {
+            
+            [ErrorManager showAlertWithDelegate:self forError:error];
+            
+        }
+    }];
+}
+
+- (PMKPromise *) fetchLists {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+        
+        PFQuery *query = [List query];
+        [query fromLocalDatastore];
+        [query whereKey:@"user" equalTo:self.user];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
+            
+            if (!error) {
+                
+                fulfill(lists);
+                
+            } else {
+                
+                reject(error);
+                
+            }
+            
+        }];
+        
+    }];
+    
+}
+
+
+
+
+- (PMKPromise *) fetchItems {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+        
+        PFQuery *query = [Item query];
+        [query fromLocalDatastore];
+        [query whereKey:@"user" equalTo:self.user];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
+            
+            if (!error) {
+                
+                fulfill(lists);
+                
+            } else {
+                
+                reject(error);
+                
+            }
+            
+        }];
+        
+    }];
+    
+}
+
+//
+//- (BFTask *) fetchItemsForList: (List *) list {
+//    
+//    PFQuery *query = [Item query];
+//    [query fromLocalDatastore];
+//    [query whereKey:@"list" equalTo:list];
+//    
+//    
+//    BFTask *task = [query findObjectsInBackground];
+//    
+//    [task continueWithBlock:^id(BFTask *task) {
+//        
+//        if (!task.error) {
+//            
+//            [ErrorManager showAlertWithDelegate:self forError:task.error];
+//            
+//            return nil;
+//            
+//        } else {
+//            
+//            NSLog(@"Retrieved %@", (NSArray *)task.result);
+//            
+//            return task.result;
+//        }
+//        
+//        
+//    }];
+//    
+//    return task;
+//    
+//}
 
 
 - (PMKPromise *) getLists {
@@ -168,9 +299,23 @@
         [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
                 
             if (!error) {
+                
+                // TODO - Improve
+                
+                [List pinAllInBackground:lists block:^(BOOL succeeded, NSError *error) {
                     
-                fulfill(lists);
+                    if (!error) {
+                        
+                        fulfill(nil);
+                        
+                    } else {
+                        
+                        reject(error);
+                        
+                    }
                     
+                }];
+
             } else {
                     
                 reject(error);
@@ -193,7 +338,21 @@
                 
             if (!error) {
                 
-                fulfill(items);
+                // TODO - Improve
+                
+                [Item pinAllInBackground:items block:^(BOOL succeeded, NSError *error) {
+                    
+                    if (!error) {
+                        
+                        fulfill(nil);
+                        
+                    } else {
+                        
+                        reject(error);
+                        
+                    }
+                    
+                }];
                     
             } else {
                     
@@ -206,7 +365,5 @@
     }];
     
 }
-
-
 
 @end

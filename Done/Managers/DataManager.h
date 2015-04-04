@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import <Bolts/Bolts.h>
 
 // Model
 #import "Item.h"
@@ -28,6 +29,8 @@
 
 @property (nonatomic, strong) NSMutableArray *itemArray;
 
+@property (nonatomic, strong) NSMutableArray *itemsInListArray;
+
 // Data Manager Public Methods
 
 - (void) loginWithUser: (NSString *)user andPassword: (NSString *)password;
@@ -35,6 +38,10 @@
 - (void) signUpUser: (PFUser *)user;
 
 - (void) loadUserData;
+
+- (void) fetchUserData;
+
+- (void) fetchItemsInList: (List *)list;
 
 - (void) saveItem: (Item *)item;
 

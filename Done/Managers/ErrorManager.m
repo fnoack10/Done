@@ -16,7 +16,7 @@
     
     UIAlertView *alertView = [[UIAlertView alloc]
                               initWithTitle:@"Error"
-                              message:[error valueForKey:@"error"]
+                              message:[error.userInfo valueForKey:@"error"]
                               delegate:delegate
                               cancelButtonTitle:@"Ok"
                               otherButtonTitles:nil,nil];
