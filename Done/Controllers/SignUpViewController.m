@@ -29,6 +29,8 @@
     
     [self.passwordTextField setDelegate:self];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backAction:) name:@"LoginSuccess" object:nil];
+    
 }
 
 #pragma mark - Text Field Protocol
@@ -79,12 +81,7 @@
         
         [[DataManager sharedManager] signUpUser:user];
         
-    } else {
-        
-        NSLog(@"ERROR IN SIGN UP");
-        
     }
-    
 
     
 }

@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) List *list;
 
+@property (strong, nonatomic) NSMutableArray *itemsInList;
+
 // Views
 
 @property (weak, nonatomic) IBOutlet UIView *topBarView;

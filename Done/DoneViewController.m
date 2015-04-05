@@ -39,9 +39,9 @@
     
     [self addObservers];
     
-    [self automaticLogin];
-    
     [self initializeTableView];
+    
+    [self automaticLogin];
 
 }
 
@@ -69,6 +69,29 @@
                   forControlEvents:UIControlEventValueChanged];
     
     tableViewController.refreshControl = self.refreshControl;
+    
+}
+
+
+#pragma mark - Login
+
+- (void) automaticLogin {
+    
+    PFUser *user = [PFUser currentUser];
+    
+    if (user) {
+        
+        NSLog(@"CURRENT USER");
+        
+        [dataManager loadUserData];
+        
+    } else {
+        
+        NSLog(@"NO USER");
+        
+        [self presentLoginViewController];
+        
+    }
     
 }
 
@@ -128,8 +151,11 @@
     }
     
     List *list = [dataManager.listArray objectAtIndex:indexPath.row];
+    NSArray *itemsInList = [dataManager.itemsInListArray objectAtIndex:indexPath.row];
     
-    cell.titleLabel.text = [NSString stringWithFormat:@" %@ %ld ", list.name, (long)[self countForList:list]];
+    cell.titleLabel.text = list.name;
+    
+    cell.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[itemsInList count]];
 
     return cell;
 }
@@ -187,26 +213,6 @@
     
 }
 
-#pragma mark - Login
 
-- (void) automaticLogin {
-    
-    PFUser *user = [PFUser currentUser];
-    
-    if (user) {
-        
-        NSLog(@"CURRENT USER");
-        
-        [dataManager loadUserData];
-        
-    } else {
-        
-        NSLog(@"NO USER");
-        
-        [self presentLoginViewController];
-
-    }
-    
-}
 
 @end

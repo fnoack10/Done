@@ -46,7 +46,6 @@
     
 }
 
-
 - (void) loginWithUser: (NSString *)user andPassword: (NSString *)password {
     
     [PFUser logInWithUsernameInBackground:user password:password block:^(PFUser *user, NSError *error) {
@@ -54,8 +53,7 @@
         if (user) {
             
             [self loadUserData];
-            
-            NSLog(@"login success");
+        
             [[NSNotificationCenter defaultCenter] postNotificationName:@"LoginSuccess" object:nil];
                                             
         } else {
@@ -86,9 +84,10 @@
     }];
 }
 
-- (void) saveItem: (Item *)item {
+- (void) saveItem: (Item *)item forList: (List *)list {
     
     item[@"user"] = self.user;
+    item[@"list"] = list;
     
     item.creationDate = [NSDate date];
     item.done = [NSNumber numberWithBool:NO];
@@ -96,7 +95,11 @@
     
     [item pinInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
-        if (succeeded) {
+        if (!error) {
+            
+            NSInteger index = [self.listArray indexOfObject:list];
+            
+            [[self.itemsInListArray objectAtIndex:index] addObject:item];
             
             [item saveEventually];
             
@@ -123,7 +126,11 @@
     
     [list pinInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
-        if (succeeded) {
+        if (!error) {
+            
+            [self.listArray addObject:list];
+            
+            [self.itemsInListArray addObject:[[NSMutableArray alloc] init]];
             
             [list saveEventually];
             
@@ -140,9 +147,27 @@
     
 }
 
+- (void) loadUsers {
+    
+    [self getUsers].then(^(NSArray *users) {
+        
+        self.userArray = [users mutableCopy];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+        
+    }).catch(^(NSError *error){
+        
+        [ErrorManager showAlertWithDelegate:self forError:error];
+        
+    });
+    
+}
+
 - (void) loadUserData {
     
     self.user = [PFUser currentUser];
+    
+    [self fetchUserData];
     
     // TODO - Reachability
     
@@ -152,6 +177,7 @@
     [PMKPromise when:@[lists, items]].then(^(NSArray *results){
         
         [self fetchUserData];
+        
         
     }).catch(^(NSError *error){
         
@@ -165,13 +191,28 @@
     
     self.user = [PFUser currentUser];
     
-    id fetchLists = [self fetchLists];
-    id fetchItems = [self fetchItems];
-    
-    [PMKPromise when:@[fetchLists, fetchItems]].then(^(NSArray *results){
+    [self fetchLists].then(^(NSArray *lists){
         
-        self.listArray = [[results objectAtIndex:0] mutableCopy];
-        self.itemArray = [[results objectAtIndex:1] mutableCopy];
+        self.listArray = [lists mutableCopy];
+        
+        NSMutableArray *listsWithItems = [[NSMutableArray alloc] init];
+        
+        for (List *list in lists) {
+            
+            id listWithItems = [self fetchItemsInList:list];
+            [listsWithItems addObject:listWithItems];
+            
+        }
+        
+        NSLog(@"lists %@", listsWithItems);
+        
+        return [PMKPromise when:listsWithItems];
+        
+    }).then(^(NSArray *itemsInLists) {
+        
+        NSLog(@"items %@", itemsInLists);
+        
+        self.itemsInListArray = [itemsInLists mutableCopy];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
         
@@ -183,28 +224,16 @@
     
 }
 
-- (void) fetchItemsInList: (List *)list {
+- (NSMutableArray *) itemsForList: (List *)list {
     
-    PFQuery *query = [Item query];
-    [query fromLocalDatastore];
-    [query whereKey:@"list" equalTo:list];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *items, NSError *error) {
-        
-        if (!error) {
-            
-            self.itemsInListArray = [items mutableCopy];
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
-            
-        } else {
-            
-            [ErrorManager showAlertWithDelegate:self forError:error];
-            
-        }
-    }];
+    NSInteger index = [self.listArray indexOfObject:list];
+    
+    return [self.itemsInListArray objectAtIndex:index];
+    
 }
 
-- (PMKPromise *) fetchLists {
+
+- (PMKPromise *) fetchLists{
     
     return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
         
@@ -229,21 +258,18 @@
     
 }
 
-
-
-
-- (PMKPromise *) fetchItems {
+- (PMKPromise *) fetchItemsInList: (List *)list {
     
     return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
         
         PFQuery *query = [Item query];
         [query fromLocalDatastore];
-        [query whereKey:@"user" equalTo:self.user];
+        [query whereKey:@"list" equalTo:list];
         [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
             
             if (!error) {
                 
-                fulfill(lists);
+                fulfill([lists mutableCopy]);
                 
             } else {
                 
@@ -257,38 +283,30 @@
     
 }
 
-//
-//- (BFTask *) fetchItemsForList: (List *) list {
-//    
-//    PFQuery *query = [Item query];
-//    [query fromLocalDatastore];
-//    [query whereKey:@"list" equalTo:list];
-//    
-//    
-//    BFTask *task = [query findObjectsInBackground];
-//    
-//    [task continueWithBlock:^id(BFTask *task) {
-//        
-//        if (!task.error) {
-//            
-//            [ErrorManager showAlertWithDelegate:self forError:task.error];
-//            
-//            return nil;
-//            
-//        } else {
-//            
-//            NSLog(@"Retrieved %@", (NSArray *)task.result);
-//            
-//            return task.result;
-//        }
-//        
-//        
-//    }];
-//    
-//    return task;
-//    
-//}
 
+- (PMKPromise *) getUsers {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+        
+        PFQuery *query = [PFUser query];
+        [query whereKey:@"email" notEqualTo:self.user.email];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *users, NSError *error) {
+            
+            if (!error) {
+                
+                fulfill(users);
+                
+            } else {
+                
+                reject(error);
+                
+            }
+            
+        }];
+        
+    }];
+    
+}
 
 - (PMKPromise *) getLists {
     

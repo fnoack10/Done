@@ -12,7 +12,11 @@
 
 #import "DataManager.h"
 
-@interface AddListViewController ()
+@interface AddListViewController () {
+    
+    DataManager *dataManager;
+    
+}
 
 @end
 
@@ -21,6 +25,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    dataManager = [DataManager sharedManager];
     
     [self.listNameTextField setDelegate:self];
     
@@ -41,9 +47,7 @@
         List *list = [List object];
         list.name = self.listNameTextField.text;
         
-        [[[DataManager sharedManager] listArray] addObject:list];
-        
-        [[DataManager sharedManager] saveList:list];
+        [dataManager saveList:list];
         
         [self dismissViewControllerAnimated:YES completion:nil];
     }

@@ -24,7 +24,7 @@
     
     DataManager *dataManager;
     
-    NSArray *itemsInList;
+    NSMutableArray *itemsForList;
     
 }
 
@@ -38,53 +38,26 @@
     
     self.titleLabel.text = self.list.name;
     
-    dataManager = [DataManager sharedManager];
+     dataManager = [DataManager sharedManager];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getItemsInList) name:@"UpdateData" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateItemTableView) name:@"UpdateData" object:nil];
     
-    [self reloadItemsInList];
+    itemsForList = [dataManager itemsForList:self.list];
     
     [self initializeTableView];
     
-    //[self getItemsInList];
-    
 }
 
-- (void) reloadItemsInList {
-    
-    [dataManager fetchItemsInList:self.list];
-    
-}
 
-- (void) getItemsInList {
+- (void) updateItemTableView {
     
+    NSLog(@"update data %@", dataManager.itemsInListArray);
     
-    NSLog(@"update data %lu", (unsigned long)dataManager.itemsInListArray.count);
+    itemsForList = [dataManager itemsForList:self.list];
     
     [self updateRefreshControl];
     
     [self.itemTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-
-    // TODO - PFRelation DATA
-    
-    
-//    NSPredicate *itemPredicate = [NSPredicate predicateWithFormat:@"(list == %@)", self.list.objectId];
-//    itemsInList = [dataManager.itemArray filteredArrayUsingPredicate:itemPredicate];
-//    
-//    [self updateRefreshControl];
-//
-//    [self.itemTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-//    
-//    Item *item = [dataManager.itemArray firstObject];
-//    
-//    NSLog(@"DATAMANAGER ITEM %@", item.list);
-//    
-//    NSLog(@"DATAMANAGER ITEM %@", self.list.objectId);
-//
-//    
-
-
 
 }
 
@@ -105,8 +78,6 @@
 
 - (void) initializeTableView {
     
-    
-    
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.itemTableView;
     
@@ -118,7 +89,7 @@
     self.refreshControl.backgroundColor = [Palette backgroundGray];
     self.refreshControl.tintColor = [Palette darkGrayColor];
     [self.refreshControl addTarget:self
-                            action:@selector(reloadItemsInList)
+                            action:@selector(updateItemTableView)
                   forControlEvents:UIControlEventValueChanged];
     
     tableViewController.refreshControl = self.refreshControl;
@@ -138,7 +109,8 @@
         cell = [[ItemTableViewCell alloc] init];
     }
     
-    Item *item = [dataManager.itemsInListArray objectAtIndex:indexPath.row];
+    
+    Item *item = [itemsForList objectAtIndex:indexPath.row];
     
     cell.titleLabel.text = item.name;
     
@@ -147,7 +119,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [dataManager.itemsInListArray count];
+    return [itemsForList count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -173,6 +145,7 @@
     if ([[segue identifier] isEqualToString:@"AddItemSegue"]) {
         
         AddItemViewController *addItemViewController = [segue destinationViewController];
+        
         addItemViewController.list = self.list;
         
     }
@@ -180,8 +153,6 @@
 }
 
 - (IBAction)letfAction:(UIButton *)sender {
-    
-    dataManager.itemsInListArray = nil;
     
     [self.navigationController popViewControllerAnimated:YES];
     

@@ -27,9 +27,9 @@
 
 @property (nonatomic, retain) NSMutableArray *listArray;
 
-@property (nonatomic, strong) NSMutableArray *itemArray;
-
 @property (nonatomic, strong) NSMutableArray *itemsInListArray;
+
+@property (nonatomic, strong) NSMutableArray *userArray;
 
 // Data Manager Public Methods
 
@@ -39,13 +39,17 @@
 
 - (void) loadUserData;
 
+- (void) loadUsers;
+
 - (void) fetchUserData;
 
-- (void) fetchItemsInList: (List *)list;
-
-- (void) saveItem: (Item *)item;
+- (void) saveItem: (Item *)item forList: (List *)list;
 
 - (void) saveList: (List *)list;
+
+// Getters
+
+- (NSMutableArray *) itemsForList: (List *)list;
 
 
 @end

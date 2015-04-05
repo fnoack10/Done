@@ -9,7 +9,11 @@
 #import "AddItemViewController.h"
 
 
-@interface AddItemViewController ()
+@interface AddItemViewController () {
+    
+    DataManager *dataManager;
+    
+}
 
 @end
 
@@ -18,6 +22,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    dataManager = [DataManager sharedManager];
     
     [self.itemNameTextField setDelegate:self];
 
@@ -35,14 +41,11 @@
     if (![self.itemNameTextField.text isEqualToString:@""]) {
         
         Item *item = [Item object];
-        
-        item[@"list"] = self.list;
+    
         item.name = self.itemNameTextField.text;
         
-        [[[DataManager sharedManager] itemsInListArray] addObject:item];
-        
-        [[DataManager sharedManager] saveItem:item];
-        
+        [dataManager saveItem:item forList:self.list];
+         
         [self dismissViewControllerAnimated:YES completion:nil];
     }
     

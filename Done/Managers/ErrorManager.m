@@ -8,11 +8,18 @@
 
 #import "ErrorManager.h"
 
+#import <Parse/Parse.h>
+
 @implementation ErrorManager
 
 + (void) showAlertWithDelegate:(id)delegate forError:(NSError *)error {
+
     
-    NSLog(@"ERROR USER INFO %@", error.userInfo);
+    if ([error code] == kPFErrorObjectNotFound) {
+        NSLog(@"ERROR MANAGER - Uh oh, we couldn't find the object!");
+    }
+    
+    NSLog(@"ERROR MESSAGE %@", [error.userInfo valueForKey:@"error"]);
     
     UIAlertView *alertView = [[UIAlertView alloc]
                               initWithTitle:@"Error"
