@@ -96,7 +96,7 @@
     
 }
 
-#pragma mark - Done Table View Protocol
+#pragma mark - List Table View Protocol
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -137,8 +137,19 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     return YES;
-    
 }
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Item *item = [itemsForList objectAtIndex:indexPath.row];
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [dataManager deleteItem:item InList:self.list];
+    }
+}
+
+#pragma mark - Done Table View Protocol
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     

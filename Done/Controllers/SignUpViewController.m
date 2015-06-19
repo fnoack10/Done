@@ -31,6 +31,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(backAction:) name:@"LoginSuccess" object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(errorHandler) name:@"Error" object:nil];
+    
 }
 
 #pragma mark - Text Field Protocol
@@ -70,6 +72,9 @@
     
     if (![self.nameTextField.text isEqualToString:@""] || ![self.lastNameTextField.text isEqualToString:@""] || ![self.emailTextField.text isEqualToString:@""] || ![self.passwordTextField.text isEqualToString:@""]) {
         
+        [self.activityIndicator startAnimating];
+        [self.signUpButton setEnabled:NO];
+        
         PFUser *user = [PFUser user];
         user.username = self.emailTextField.text;
         user.password = self.passwordTextField.text;
@@ -83,6 +88,13 @@
         
     }
 
+    
+}
+
+- (void) errorHandler {
+    
+    [self.signUpButton setEnabled:YES];
+    [self.activityIndicator stopAnimating];
     
 }
 

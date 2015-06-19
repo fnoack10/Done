@@ -24,6 +24,10 @@
     
     DataManager *dataManager;
     
+    int contraintValue;
+    
+    
+    
 }
 
 @end
@@ -42,6 +46,17 @@
     [self initializeTableView];
     
     [self automaticLogin];
+    
+    
+    // FIX RECOGNIZER
+    
+//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+//    [panRecognizer setMinimumNumberOfTouches:1];
+//    [panRecognizer setMaximumNumberOfTouches:1];
+//    [self.listTableView addGestureRecognizer:panRecognizer];
+//    
+
+    
 
 }
 
@@ -54,11 +69,16 @@
 
 - (void) initializeTableView {
     
+    [self.view setBackgroundColor:[Palette backgroundGray]];
+
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.listTableView;
     
+    [self.addListButton setTitleColor:[Palette titleGray] forState:UIControlStateNormal];
+    
     [self.listTableView setDelegate:self];
     [self.listTableView setDataSource:self];
+    [self.listTableView setSeparatorColor:[Palette backgroundGray]];
     [self.listTableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -83,7 +103,21 @@
         
         NSLog(@"CURRENT USER");
         
-        [dataManager loadUserData];
+        if (!dataManager.listArray) {
+            
+            NSLog(@"Load data");
+            
+            [dataManager loadUserData];
+            
+        } else {
+            
+            NSLog(@"just update table");
+            
+            [self updateTable];
+            
+        }
+        
+        
         
     } else {
         
@@ -153,9 +187,13 @@
     List *list = [dataManager.listArray objectAtIndex:indexPath.row];
     NSArray *itemsInList = [dataManager.itemsInListArray objectAtIndex:indexPath.row];
     
+    [cell.pin.layer setCornerRadius:7.5];
+
     cell.titleLabel.text = list.name;
+    [cell.titleLabel setTextColor:[Palette titleGray]];
     
     cell.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[itemsInList count]];
+    [cell.countLabel setTextColor:[Palette textGray]];
 
     return cell;
 }
@@ -179,6 +217,81 @@
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    List *list = [dataManager.listArray objectAtIndex:indexPath.row];
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        [dataManager deleteList:list];
+    }
+}
+
+
+
+
+
+
+// TODO - FIX
+//
+//
+//- (void)handlePan:(UIPanGestureRecognizer *)gesture {
+//    
+//    NSLog(@"constraint value %f", [gesture translationInView:self.view].y);
+//    
+//    
+//    if ([gesture translationInView:self.view].y >= 0) { // Going Down
+//        
+//        if (contraintValue < 0) {
+//            
+//            contraintValue = [gesture translationInView:self.view].y;
+//            
+//        } else {
+//            
+//            contraintValue = 0;
+//            
+//        }
+//        
+//    } else { // Going Up
+//        
+//        if (contraintValue < -50) {
+//            
+//            contraintValue = [gesture translationInView:self.view].y;
+//            
+//        } else {
+//            
+//            contraintValue = -50;
+//            
+//        }
+//        
+//    }
+//    
+//    NSLog(@"constraint value %d", contraintValue);
+//    
+//    
+//    [self.addListButton layoutIfNeeded];
+//    
+//    [UIView animateWithDuration:0.5 animations:^(void) {
+//        
+//        self.addListConstraint.constant = contraintValue;
+//        [self.addListButton layoutIfNeeded];
+//        
+//    }];
+//    
+//    
+//}
+
+
+
+
+
+#pragma mark - Other COntrollers
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     if ([[segue identifier] isEqualToString:@"ListViewSegue"]) {
@@ -192,12 +305,6 @@
         
     }
 
-    
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return YES;
     
 }
 

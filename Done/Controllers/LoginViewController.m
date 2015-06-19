@@ -32,8 +32,8 @@
 
 - (IBAction)loginAction:(UIButton *)sender {
     
-    NSString *email = @"fnoack10@gmail.com";
-    NSString *password = @"123456";
+    NSString *email = self.userTextField.text;
+    NSString *password = self.passwordTextField.text;
     
     [[DataManager sharedManager] loginWithUser:email andPassword:password];
     

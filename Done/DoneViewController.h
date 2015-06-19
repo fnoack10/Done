@@ -24,6 +24,8 @@
 
 // Buttons
 
+@property (weak, nonatomic) IBOutlet UIButton *addListButton;
+
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
@@ -31,5 +33,9 @@
 // Refresh Control
 
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+// Constraint
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addListConstraint;
 
 @end

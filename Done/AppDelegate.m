@@ -9,6 +9,9 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 
+// Managers
+#import "DataManager.h"
+
 // Model
 #import "Item.h"
 #import "List.h"
@@ -37,6 +40,8 @@
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     // ...
+    
+    [[DataManager sharedManager] preloadUserData];
     
     return YES;
 }

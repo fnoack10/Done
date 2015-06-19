@@ -12,21 +12,20 @@
 
 + (UIColor *) backgroundGray {
     
-    return [UIColor colorWithRed:(235/255.0) green:(239/255.0) blue:(242/255.0) alpha:1];
+    return [UIColor colorWithRed:(226/255.0) green:(228/255.0) blue:(235/255.0) alpha:1];
     
 }
 
-+ (UIColor *) brandBlue {
++ (UIColor *) titleGray {
     
-    return [UIColor colorWithRed:(50/255.0) green:(66/255.0) blue:(92/255.0) alpha:1];
-    
-}
-
-+ (UIColor *) brandDarkBlue {
-    
-    return [UIColor colorWithRed:(41/255.0) green:(53/255.0) blue:(73/255.0) alpha:1];
+    return [UIColor colorWithRed:(67/255.0) green:(72/255.0) blue:(78/255.0) alpha:1];
     
 }
 
++ (UIColor *) textGray {
+    
+    return [UIColor colorWithRed:(118/255.0) green:(125/255.0) blue:(135/255.0) alpha:1];
+    
+}
 
 @end

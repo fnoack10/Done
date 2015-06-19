@@ -18,6 +18,8 @@
     
     DataManager *dataManager;
     
+    NSArray *usersArray;
+    
 }
 
 @end
@@ -40,7 +42,7 @@
 
 - (void) updateTable {
     
-    
+    usersArray = dataManager.userArray;
     
     NSLog(@"update tabel");
     
@@ -98,9 +100,9 @@
         cell = [[FriendTableViewCell alloc] init];
     }
     
-    [cell.iconView.layer setCornerRadius:25.0];
+    [cell.iconView.layer setCornerRadius:20.0];
     
-    PFUser *user = [dataManager.userArray objectAtIndex:indexPath.row];
+    PFUser *user = [usersArray objectAtIndex:indexPath.row];
     
     NSString *firstName = user[@"firstName"];
     NSString *lastName = user[@"lastName"];
@@ -113,7 +115,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [dataManager.userArray count];
+    return [usersArray count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -123,6 +125,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    
+    [dataManager addFriend:[usersArray objectAtIndex:indexPath.row]];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

@@ -31,7 +31,11 @@
 
 @property (nonatomic, strong) NSMutableArray *userArray;
 
+@property (nonatomic, strong) NSMutableArray *friendsArray;
+
 // Data Manager Public Methods
+
+- (void) preloadUserData;
 
 - (void) loginWithUser: (NSString *)user andPassword: (NSString *)password;
 
@@ -41,11 +45,27 @@
 
 - (void) loadUsers;
 
+- (void) loadFriends;
+
 - (void) fetchUserData;
+
+// Save
+
+- (void) saveList: (List *)list;
 
 - (void) saveItem: (Item *)item forList: (List *)list;
 
-- (void) saveList: (List *)list;
+// Delete
+
+- (void) deleteList: (List *)list;
+
+- (void) deleteItem: (Item *)item InList: (List *)list;
+
+// Friends
+
+- (void) addFriend: (PFUser *) user;
+
+- (void) addFriend: (PFUser *) user ToList: (List *)list;
 
 // Getters
 

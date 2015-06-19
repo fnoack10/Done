@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B68D3599DF8661C972ECDC92 /* libPods-Done.a */; };
-		9D5CE9851AD1B62F002BE5BA /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D5CE9831AD1B62F002BE5BA /* Bolts.framework */; };
-		9D5CE9861AD1B62F002BE5BA /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D5CE9841AD1B62F002BE5BA /* Parse.framework */; };
+		9D10AB891ADAB9F100173E6E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D10AB881ADAB9F100173E6E /* ProfileViewController.m */; };
+		9D10AB8C1ADAC12600173E6E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D10AB8B1ADAC12600173E6E /* ShareViewController.m */; };
 		9D5CE9891AD1CAD3002BE5BA /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5CE9881AD1CAD3002BE5BA /* FriendsViewController.m */; };
 		9D5CE98C1AD1CBC3002BE5BA /* FriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5CE98B1AD1CBC3002BE5BA /* FriendTableViewCell.m */; };
 		9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */; };
@@ -30,6 +30,9 @@
 		9DB1789F1ABDAB8400E9E60F /* Item.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB1789E1ABDAB8400E9E60F /* Item.m */; };
 		9DB178A21ABDAB9200E9E60F /* List.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB178A11ABDAB9200E9E60F /* List.m */; };
 		9DB178A61ABDAC5100E9E60F /* ErrorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DB178A51ABDAC5100E9E60F /* ErrorManager.m */; };
+		9DBDD81C1B34ACA7004001F7 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBDD81A1B34ACA7004001F7 /* Bolts.framework */; };
+		9DBDD81D1B34ACA7004001F7 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DBDD81B1B34ACA7004001F7 /* Parse.framework */; };
+		9DBDD81F1B34B3FC004001F7 /* OpenSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9DBDD81E1B34B3FC004001F7 /* OpenSans-Light.ttf */; };
 		9DE77C021ABF3B8B007C1FC9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C011ABF3B8B007C1FC9 /* AudioToolbox.framework */; };
 		9DE77C041ABF3B92007C1FC9 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C031ABF3B92007C1FC9 /* CFNetwork.framework */; };
 		9DE77C061ABF3B99007C1FC9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DE77C051ABF3B99007C1FC9 /* CoreGraphics.framework */; };
@@ -56,8 +59,10 @@
 
 /* Begin PBXFileReference section */
 		95B38A6A5BF4FDB3954BD708 /* Pods-Done.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Done.release.xcconfig"; path = "Pods/Target Support Files/Pods-Done/Pods-Done.release.xcconfig"; sourceTree = "<group>"; };
-		9D5CE9831AD1B62F002BE5BA /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		9D5CE9841AD1B62F002BE5BA /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		9D10AB871ADAB9F100173E6E /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileViewController.h; path = Controllers/ProfileViewController.h; sourceTree = "<group>"; };
+		9D10AB881ADAB9F100173E6E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Controllers/ProfileViewController.m; sourceTree = "<group>"; };
+		9D10AB8A1ADAC12600173E6E /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = Controllers/ShareViewController.h; sourceTree = "<group>"; };
+		9D10AB8B1ADAC12600173E6E /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = Controllers/ShareViewController.m; sourceTree = "<group>"; };
 		9D5CE9871AD1CAD3002BE5BA /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Controllers/FriendsViewController.h; sourceTree = "<group>"; };
 		9D5CE9881AD1CAD3002BE5BA /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controllers/FriendsViewController.m; sourceTree = "<group>"; };
 		9D5CE98A1AD1CBC3002BE5BA /* FriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendTableViewCell.h; path = "Table View Cells/FriendTableViewCell.h"; sourceTree = "<group>"; };
@@ -97,6 +102,9 @@
 		9DB178A11ABDAB9200E9E60F /* List.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = List.m; path = Model/List.m; sourceTree = "<group>"; };
 		9DB178A41ABDAC5100E9E60F /* ErrorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorManager.h; path = Managers/ErrorManager.h; sourceTree = "<group>"; };
 		9DB178A51ABDAC5100E9E60F /* ErrorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorManager.m; path = Managers/ErrorManager.m; sourceTree = "<group>"; };
+		9DBDD81A1B34ACA7004001F7 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		9DBDD81B1B34ACA7004001F7 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		9DBDD81E1B34B3FC004001F7 /* OpenSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Light.ttf"; sourceTree = "<group>"; };
 		9DE77C011ABF3B8B007C1FC9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9DE77C031ABF3B92007C1FC9 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		9DE77C051ABF3B99007C1FC9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -118,10 +126,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */,
 				9DE77C161ABF3BD6007C1FC9 /* libsqlite3.dylib in Frameworks */,
 				9DE77C141ABF3BCB007C1FC9 /* libz.dylib in Frameworks */,
-				9D5CE9861AD1B62F002BE5BA /* Parse.framework in Frameworks */,
-				9D5CE9851AD1B62F002BE5BA /* Bolts.framework in Frameworks */,
+				9DBDD81D1B34ACA7004001F7 /* Parse.framework in Frameworks */,
+				9DBDD81C1B34ACA7004001F7 /* Bolts.framework in Frameworks */,
 				9DE77C181ABF3C9E007C1FC9 /* Accounts.framework in Frameworks */,
 				9DE77C171ABF3C98007C1FC9 /* Social.framework in Frameworks */,
 				9DE77C121ABF3BC3007C1FC9 /* SystemConfiguration.framework in Frameworks */,
@@ -132,7 +141,6 @@
 				9DE77C061ABF3B99007C1FC9 /* CoreGraphics.framework in Frameworks */,
 				9DE77C041ABF3B92007C1FC9 /* CFNetwork.framework in Frameworks */,
 				9DE77C021ABF3B8B007C1FC9 /* AudioToolbox.framework in Frameworks */,
-				93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +196,10 @@
 				9D77E72B1ACEF7C500E87E67 /* AddListViewController.m */,
 				9D77E71D1ACEB54800E87E67 /* AddItemViewController.h */,
 				9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */,
+				9D10AB871ADAB9F100173E6E /* ProfileViewController.h */,
+				9D10AB881ADAB9F100173E6E /* ProfileViewController.m */,
+				9D10AB8A1ADAC12600173E6E /* ShareViewController.h */,
+				9D10AB8B1ADAC12600173E6E /* ShareViewController.m */,
 				9D5CE9871AD1CAD3002BE5BA /* FriendsViewController.h */,
 				9D5CE9881AD1CAD3002BE5BA /* FriendsViewController.m */,
 			);
@@ -249,10 +261,11 @@
 		9DB178531ABDA5A400E9E60F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9DBDD8171B34AAF7004001F7 /* Fonts */,
 				9DB178541ABDA5A400E9E60F /* Info.plist */,
 				9DB178551ABDA5A400E9E60F /* main.m */,
-				9D5CE9831AD1B62F002BE5BA /* Bolts.framework */,
-				9D5CE9841AD1B62F002BE5BA /* Parse.framework */,
+				9DBDD81A1B34ACA7004001F7 /* Bolts.framework */,
+				9DBDD81B1B34ACA7004001F7 /* Parse.framework */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -294,6 +307,14 @@
 				9DB178A11ABDAB9200E9E60F /* List.m */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		9DBDD8171B34AAF7004001F7 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9DBDD81E1B34B3FC004001F7 /* OpenSans-Light.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,6 +407,7 @@
 			files = (
 				9DB1785F1ABDA5A400E9E60F /* Main.storyboard in Resources */,
 				9DB178641ABDA5A400E9E60F /* LaunchScreen.xib in Resources */,
+				9DBDD81F1B34B3FC004001F7 /* OpenSans-Light.ttf in Resources */,
 				9DB178611ABDA5A400E9E60F /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,12 +468,14 @@
 				9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */,
 				9D97CB9B1AC85991004F2140 /* Palette.m in Sources */,
 				9DB178A61ABDAC5100E9E60F /* ErrorManager.m in Sources */,
+				9D10AB891ADAB9F100173E6E /* ProfileViewController.m in Sources */,
 				9D97CB9F1AC85E39004F2140 /* DoneViewController.m in Sources */,
 				9DB178A21ABDAB9200E9E60F /* List.m in Sources */,
 				9D5CE98C1AD1CBC3002BE5BA /* FriendTableViewCell.m in Sources */,
 				9DB178591ABDA5A400E9E60F /* AppDelegate.m in Sources */,
 				9D77E7291ACEF7A300E87E67 /* ListViewController.m in Sources */,
 				9D77E7231ACEC21600E87E67 /* LoginViewController.m in Sources */,
+				9D10AB8C1ADAC12600173E6E /* ShareViewController.m in Sources */,
 				9DB178561ABDA5A400E9E60F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,7 +608,7 @@
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dbb94f9f-18ba-4639-8f73-2bcea0e1723d";
 			};
 			name = Debug;
 		};
@@ -602,7 +626,7 @@
 				INFOPLIST_FILE = Done/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dbb94f9f-18ba-4639-8f73-2bcea0e1723d";
 			};
 			name = Release;
 		};

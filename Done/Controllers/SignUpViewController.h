@@ -20,6 +20,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
+// Activity Indicator
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 // Buttons
 
 @property (weak, nonatomic) IBOutlet UIButton *signUpButton;

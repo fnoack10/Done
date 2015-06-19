@@ -16,4 +16,9 @@
 
 + (UIColor *) brandDarkBlue;
 
++ (UIColor *) titleGray;
+
++ (UIColor *) textGray;
+
+
 @end

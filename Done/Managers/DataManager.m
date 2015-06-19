@@ -46,11 +46,29 @@
     
 }
 
+- (void) preloadUserData {
+    
+    PFUser *user = [PFUser currentUser];
+    
+    if (user) {
+        
+        NSLog(@"PreloadData");
+        
+        self.user = user;
+        
+        [self fetchUserData];
+        
+    }
+    
+}
+
 - (void) loginWithUser: (NSString *)user andPassword: (NSString *)password {
     
     [PFUser logInWithUsernameInBackground:user password:password block:^(PFUser *user, NSError *error) {
         
         if (user) {
+            
+            self.user = user;
             
             [self loadUserData];
         
@@ -71,6 +89,8 @@
     [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
         if (succeeded) {
+            
+            self.user = [PFUser currentUser];
 
             [self loadUserData];
             
@@ -78,10 +98,41 @@
             
         } else {
             
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Error" object:nil];
+            
             [ErrorManager showAlertWithDelegate:self forError:error];
             
         }
     }];
+}
+
+- (void) giveAccessTo: (PFUser *)user forList: (List *)list {
+    
+    PFRelation *relation = [user relationForKey:@"hasAccess"];
+    [relation addObject:list];
+    
+    [user saveInBackground];
+    
+}
+
+- (void) addFriend: (PFUser *)user {
+    
+    NSLog(@"save user %@", user);
+    
+    PFRelation *relation = [self.user relationForKey:@"isFriend"];
+    [relation addObject:user];
+    
+    [self.user saveInBackground];
+    
+}
+
+- (void) addFriend: (PFUser *)user ToList: (List *)list {
+    
+    PFRelation *relation = [user relationForKey:@"hasAccessToList"];
+    [relation addObject:list];
+    
+    [user saveInBackground];
+    
 }
 
 - (void) saveItem: (Item *)item forList: (List *)list {
@@ -147,6 +198,30 @@
     
 }
 
+
+- (void) deleteList: (List *)list {
+    
+    list.deleted = [NSNumber numberWithBool:YES];
+    
+    // TODO - DELETE ALL ITEMS IN LIST
+    
+    [list saveEventually];
+    
+    [self fetchUserData];
+    
+}
+
+- (void) deleteItem: (Item *)item InList: (List *)list {
+    
+    item.deleted = [NSNumber numberWithBool:YES];
+    
+    [item saveEventually];
+    
+    [self fetchUserData];
+    
+}
+
+
 - (void) loadUsers {
     
     [self getUsers].then(^(NSArray *users) {
@@ -163,13 +238,27 @@
     
 }
 
+- (void) loadFriends {
+    
+    [self getFriends].then(^(NSArray *friends) {
+        
+        self.friendsArray = [friends mutableCopy];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateData" object:nil];
+        
+    }).catch(^(NSError *error){
+        
+        [ErrorManager showAlertWithDelegate:self forError:error];
+        
+    });
+    
+}
+
 - (void) loadUserData {
     
-    self.user = [PFUser currentUser];
-    
-    [self fetchUserData];
-    
     // TODO - Reachability
+    
+    NSLog(@"user %@", self.user);
     
     id lists = [self getLists];
     id items = [self getItems];
@@ -189,9 +278,14 @@
 
 - (void) fetchUserData {
     
-    self.user = [PFUser currentUser];
+    NSLog(@"FETCH USER DATA");
     
     [self fetchLists].then(^(NSArray *lists){
+        
+        // TODO - FIX SORT FUNCTION
+        
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:YES];
+        lists = [lists sortedArrayUsingDescriptors:@[sort]];
         
         self.listArray = [lists mutableCopy];
         
@@ -204,13 +298,9 @@
             
         }
         
-        NSLog(@"lists %@", listsWithItems);
-        
         return [PMKPromise when:listsWithItems];
         
     }).then(^(NSArray *itemsInLists) {
-        
-        NSLog(@"items %@", itemsInLists);
         
         self.itemsInListArray = [itemsInLists mutableCopy];
         
@@ -240,6 +330,7 @@
         PFQuery *query = [List query];
         [query fromLocalDatastore];
         [query whereKey:@"user" equalTo:self.user];
+        [query whereKey:@"deleted" equalTo:[NSNumber numberWithBool:NO]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
             
             if (!error) {
@@ -265,6 +356,7 @@
         PFQuery *query = [Item query];
         [query fromLocalDatastore];
         [query whereKey:@"list" equalTo:list];
+        [query whereKey:@"deleted" equalTo:[NSNumber numberWithBool:NO]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *lists, NSError *error) {
             
             if (!error) {
@@ -307,6 +399,30 @@
     }];
     
 }
+
+- (PMKPromise *) getFriends {
+    
+    return [PMKPromise new:^(PMKPromiseFulfiller fulfill, PMKPromiseRejecter reject) {
+    
+        PFRelation *relation = [self.user relationForKey:@"isFriend"];
+        [[relation query] findObjectsInBackgroundWithBlock:^(NSArray *friends, NSError *error) {
+
+            if (!error) {
+                
+                fulfill(friends);
+                
+            } else {
+                
+                reject(error);
+                
+            }
+            
+        }];
+        
+    }];
+    
+}
+
 
 - (PMKPromise *) getLists {
     
