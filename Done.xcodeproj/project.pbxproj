@@ -10,6 +10,8 @@
 		93343EA942D6276AFE3F7228 /* libPods-Done.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B68D3599DF8661C972ECDC92 /* libPods-Done.a */; };
 		9D10AB891ADAB9F100173E6E /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D10AB881ADAB9F100173E6E /* ProfileViewController.m */; };
 		9D10AB8C1ADAC12600173E6E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D10AB8B1ADAC12600173E6E /* ShareViewController.m */; };
+		9D205CBE1B3582630054B86F /* Typography.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D205CBD1B3582630054B86F /* Typography.m */; };
+		9D205CC01B35CC130054B86F /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D205CBF1B35CC130054B86F /* OpenSans-Regular.ttf */; };
 		9D5CE9891AD1CAD3002BE5BA /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5CE9881AD1CAD3002BE5BA /* FriendsViewController.m */; };
 		9D5CE98C1AD1CBC3002BE5BA /* FriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D5CE98B1AD1CBC3002BE5BA /* FriendTableViewCell.m */; };
 		9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D77E71E1ACEB54800E87E67 /* AddItemViewController.m */; };
@@ -63,6 +65,9 @@
 		9D10AB881ADAB9F100173E6E /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileViewController.m; path = Controllers/ProfileViewController.m; sourceTree = "<group>"; };
 		9D10AB8A1ADAC12600173E6E /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = Controllers/ShareViewController.h; sourceTree = "<group>"; };
 		9D10AB8B1ADAC12600173E6E /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = Controllers/ShareViewController.m; sourceTree = "<group>"; };
+		9D205CBC1B3582630054B86F /* Typography.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Typography.h; path = Resources/Typography.h; sourceTree = "<group>"; };
+		9D205CBD1B3582630054B86F /* Typography.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Typography.m; path = Resources/Typography.m; sourceTree = "<group>"; };
+		9D205CBF1B35CC130054B86F /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		9D5CE9871AD1CAD3002BE5BA /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Controllers/FriendsViewController.h; sourceTree = "<group>"; };
 		9D5CE9881AD1CAD3002BE5BA /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controllers/FriendsViewController.m; sourceTree = "<group>"; };
 		9D5CE98A1AD1CBC3002BE5BA /* FriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendTableViewCell.h; path = "Table View Cells/FriendTableViewCell.h"; sourceTree = "<group>"; };
@@ -215,6 +220,8 @@
 				9D97CBA11AC8602F004F2140 /* ItemTableViewCell.m */,
 				9D97CB991AC85991004F2140 /* Palette.h */,
 				9D97CB9A1AC85991004F2140 /* Palette.m */,
+				9D205CBC1B3582630054B86F /* Typography.h */,
+				9D205CBD1B3582630054B86F /* Typography.m */,
 			);
 			name = Reources;
 			sourceTree = "<group>";
@@ -313,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				9DBDD81E1B34B3FC004001F7 /* OpenSans-Light.ttf */,
+				9D205CBF1B35CC130054B86F /* OpenSans-Regular.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -405,6 +413,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D205CC01B35CC130054B86F /* OpenSans-Regular.ttf in Resources */,
 				9DB1785F1ABDA5A400E9E60F /* Main.storyboard in Resources */,
 				9DB178641ABDA5A400E9E60F /* LaunchScreen.xib in Resources */,
 				9DBDD81F1B34B3FC004001F7 /* OpenSans-Light.ttf in Resources */,
@@ -464,6 +473,7 @@
 				9DB1789F1ABDAB8400E9E60F /* Item.m in Sources */,
 				9D77E72C1ACEF7C500E87E67 /* AddListViewController.m in Sources */,
 				9D77E7261ACEEFE200E87E67 /* SignUpViewController.m in Sources */,
+				9D205CBE1B3582630054B86F /* Typography.m in Sources */,
 				9DB1789B1ABDAA0600E9E60F /* DataManager.m in Sources */,
 				9D77E71F1ACEB54800E87E67 /* AddItemViewController.m in Sources */,
 				9D97CB9B1AC85991004F2140 /* Palette.m in Sources */,

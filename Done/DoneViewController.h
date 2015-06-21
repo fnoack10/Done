@@ -18,17 +18,17 @@
 
 @property (weak, nonatomic) IBOutlet UIView *headerView;
 
+@property (weak, nonatomic) IBOutlet UIView *addListView;
+
 // Labels
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *addListLabel;
+
 // Buttons
 
-@property (weak, nonatomic) IBOutlet UIButton *addListButton;
-
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
-
-@property (weak, nonatomic) IBOutlet UIButton *rightButton;
 
 // Refresh Control
 

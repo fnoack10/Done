@@ -114,6 +114,10 @@
     
     cell.titleLabel.text = item.name;
     
+    [cell.pin.layer setCornerRadius:7.5];
+    
+    [cell.innerPin.layer setCornerRadius:4.5];
+    
     return cell;
 }
 

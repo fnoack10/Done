@@ -24,14 +24,22 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *colorButton;
+
 // Labels
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
+// Constraint
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *addListButtonConstraint;
 
 // Action
 
 - (IBAction)closeAction:(UIButton *)sender;
 
 - (IBAction)addListAction:(UIButton *)sender;
+
+- (IBAction)colorAction:(UIButton *)sender;
 
 @end

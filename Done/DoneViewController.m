@@ -9,24 +9,27 @@
 #import "DoneViewController.h"
 
 // Managers
+
 #import "DataManager.h"
 
 // Controllers
+
 #import "LoginViewController.h"
+
 #import "ListViewController.h"
 
 // Resources
+
 #import "ItemTableViewCell.h"
+
+#import "Typography.h"
+
 #import "Palette.h"
 
 
 @interface DoneViewController () {
     
     DataManager *dataManager;
-    
-    int contraintValue;
-    
-    
     
 }
 
@@ -47,22 +50,13 @@
     
     [self automaticLogin];
     
-    
-    // FIX RECOGNIZER
-    
-//    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-//    [panRecognizer setMinimumNumberOfTouches:1];
-//    [panRecognizer setMaximumNumberOfTouches:1];
-//    [self.listTableView addGestureRecognizer:panRecognizer];
-//    
-
-    
 
 }
 
 - (void) addObservers {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeTableView) name:@"LoginSuccess" object:nil];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTable) name:@"UpdateData" object:nil];
     
 }
@@ -70,11 +64,16 @@
 - (void) initializeTableView {
     
     [self.view setBackgroundColor:[Palette backgroundGray]];
-
+    
+    [self.titleLabel setFont:[Typography lightOpenSans:@"title"]];
+    [self.titleLabel setTextColor:[Palette titleGray]];
+    
+    [self.addListView setBackgroundColor:[Palette backgroundGray]];
+    [self.addListLabel setFont:[Typography lightOpenSans:@"button"]];
+    [self.addListLabel setTintColor:[Palette whiteColor]];
+    
     UITableViewController *tableViewController = [[UITableViewController alloc] init];
     tableViewController.tableView = self.listTableView;
-    
-    [self.addListButton setTitleColor:[Palette titleGray] forState:UIControlStateNormal];
     
     [self.listTableView setDelegate:self];
     [self.listTableView setDataSource:self];
@@ -83,15 +82,14 @@
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [Palette backgroundGray];
-    self.refreshControl.tintColor = [Palette darkGrayColor];
+    self.refreshControl.tintColor = [Palette whiteColor];
     [self.refreshControl addTarget:self
-                            action:@selector(reloadData)
+                            action:@selector(addNewList)
                   forControlEvents:UIControlEventValueChanged];
     
     tableViewController.refreshControl = self.refreshControl;
     
 }
-
 
 #pragma mark - Login
 
@@ -101,27 +99,17 @@
     
     if (user) {
         
-        NSLog(@"CURRENT USER");
-        
         if (!dataManager.listArray) {
-            
-            NSLog(@"Load data");
             
             [dataManager loadUserData];
             
         } else {
             
-            NSLog(@"just update table");
-            
             [self updateTable];
             
         }
         
-        
-        
     } else {
-        
-        NSLog(@"NO USER");
         
         [self presentLoginViewController];
         
@@ -129,73 +117,71 @@
     
 }
 
-- (void) reloadData {
+- (void) addNewList {
     
-    [dataManager loadUserData];
+    [self performSegueWithIdentifier:@"AddListSegue" sender:nil];
+    
+    [self.refreshControl endRefreshing];
+    
+    //[dataManager loadUserData];
     
 }
 
 - (void) updateTable {
     
+    [self.refreshControl beginRefreshing];
     
-    NSLog(@"update tabel");
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"MMM d, h:mm a"];
+//    
+//    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+//    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[Palette darkGrayColor] forKey:NSForegroundColorAttributeName];
+//    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+//    
+//    self.refreshControl.attributedTitle = attributedTitle;
     
-    [self updateRefreshControl];
+    [self.refreshControl endRefreshing];
     
     [self.listTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
 
-- (void) updateRefreshControl {
-    
-    [self.refreshControl beginRefreshing];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
-    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[Palette darkGrayColor] forKey:NSForegroundColorAttributeName];
-    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-    self.refreshControl.attributedTitle = attributedTitle;
-    
-    [self.refreshControl endRefreshing];
-    
-}
-
-
-- (NSInteger) countForList: (List *)list {
-    
-    PFQuery *query = [List query];
-    [query fromLocalDatastore];
-    [query whereKey:@"list" equalTo:list];
-    return [[query findObjects] count];
-    
-}
-
 #pragma mark - Done Table View Protocol
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"ItemTableViewCell";
     
     ItemTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
+    // Create cell
+    
     if (!cell) {
+        
         cell = [[ItemTableViewCell alloc] init];
+        
     }
+    
+    // Prepare cell
+    
+    [cell.titleLabel setFont:[Typography lightOpenSans:@"text"]];
+    [cell.countLabel setFont:[Typography lightOpenSans:@"text"]];
+    
+    [cell.titleLabel setTextColor:[Palette titleGray]];
+    [cell.countLabel setTextColor:[Palette textGray]];
+    
+    [cell.pin.layer setCornerRadius:7.5];
+    
+    // Set Values
     
     List *list = [dataManager.listArray objectAtIndex:indexPath.row];
     NSArray *itemsInList = [dataManager.itemsInListArray objectAtIndex:indexPath.row];
     
-    [cell.pin.layer setCornerRadius:7.5];
-
     cell.titleLabel.text = list.name;
-    [cell.titleLabel setTextColor:[Palette titleGray]];
-    
     cell.countLabel.text = [NSString stringWithFormat:@"%lu", (unsigned long)[itemsInList count]];
-    [cell.countLabel setTextColor:[Palette textGray]];
 
     return cell;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -217,9 +203,10 @@
     
 }
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     return YES;
+    
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -229,68 +216,12 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         [dataManager deleteList:list];
+        
     }
+    
 }
 
-
-
-
-
-
-// TODO - FIX
-//
-//
-//- (void)handlePan:(UIPanGestureRecognizer *)gesture {
-//    
-//    NSLog(@"constraint value %f", [gesture translationInView:self.view].y);
-//    
-//    
-//    if ([gesture translationInView:self.view].y >= 0) { // Going Down
-//        
-//        if (contraintValue < 0) {
-//            
-//            contraintValue = [gesture translationInView:self.view].y;
-//            
-//        } else {
-//            
-//            contraintValue = 0;
-//            
-//        }
-//        
-//    } else { // Going Up
-//        
-//        if (contraintValue < -50) {
-//            
-//            contraintValue = [gesture translationInView:self.view].y;
-//            
-//        } else {
-//            
-//            contraintValue = -50;
-//            
-//        }
-//        
-//    }
-//    
-//    NSLog(@"constraint value %d", contraintValue);
-//    
-//    
-//    [self.addListButton layoutIfNeeded];
-//    
-//    [UIView animateWithDuration:0.5 animations:^(void) {
-//        
-//        self.addListConstraint.constant = contraintValue;
-//        [self.addListButton layoutIfNeeded];
-//        
-//    }];
-//    
-//    
-//}
-
-
-
-
-
-#pragma mark - Other COntrollers
+#pragma mark - Other Controllers
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
@@ -300,8 +231,6 @@
         
         ListViewController *listViewController = [segue destinationViewController];
         listViewController.list = [dataManager.listArray objectAtIndex:index.row];
-        
-        NSLog(@"list array %@", [dataManager.listArray objectAtIndex:index.row]);
         
     }
 

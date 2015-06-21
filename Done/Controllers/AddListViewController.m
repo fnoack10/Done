@@ -12,6 +12,12 @@
 
 #import "DataManager.h"
 
+// Resources
+
+#import "Typography.h"
+
+#import "Palette.h"
+
 @interface AddListViewController () {
     
     DataManager *dataManager;
@@ -28,10 +34,43 @@
     
     dataManager = [DataManager sharedManager];
     
+    [self initializeController];
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    
+    [super viewWillDisappear:animated];
+    
+    [self.listNameTextField resignFirstResponder];
+    
+}
+
+- (void) initializeController {
+    
+    [self.colorButton.layer setCornerRadius:17.5];
+    
+    [self.titleLabel setTextColor:[Palette titleGray]];
+    
+    [self.titleLabel setFont:[Typography lightOpenSans:@"title"]];
+    
     [self.listNameTextField setDelegate:self];
     
-    // Do any additional setup after loading the view.
+    [self.listNameTextField becomeFirstResponder];
+    
+    [self.listNameTextField setTintColor:[Palette backgroundGray]];
+    
+    [self.listNameTextField setTextColor:[Palette textGray]];
+    
 }
+
+#pragma mark - Button Action
 
 - (IBAction)closeAction:(UIButton *)sender {
     
@@ -53,9 +92,24 @@
     }
 }
 
+- (IBAction)colorAction:(UIButton *)sender {
+    
+    
+}
+
 #pragma mark - Text Field Protocol
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    
+    [self.addListButton layoutIfNeeded];
+    
+    [UIView animateWithDuration:0.4 animations:^(void) {
+        
+        self.addListButtonConstraint.constant = 216;
+        
+        [self.addListButton layoutIfNeeded];
+        
+    }];
     
     return YES;
     
@@ -64,6 +118,22 @@
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     
     [self.listNameTextField resignFirstResponder];
+    
+    return YES;
+    
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+    
+    [self.addListButton layoutIfNeeded];
+    
+    [UIView animateWithDuration:0.3 animations:^(void) {
+        
+        self.addListButtonConstraint.constant = 0;
+        
+        [self.addListButton layoutIfNeeded];
+        
+    }];
     
     return YES;
     
